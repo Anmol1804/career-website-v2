@@ -11,7 +11,7 @@ JOBS = [
   },
   {
     'id': '2',
-    'title': 'Data Scietist',
+    'title': 'Data Scientist',
     'location': 'Delhi, India',
     'salary': 'Rs. 15,00,000'
   },
@@ -33,6 +33,7 @@ JOBS = [
 @app.route("/")
 def helloWorld():
   return render_template('home.html', jobs=JOBS)
+
 
 # we store the data in an api route (json data)
 @app.route("/api/jobs")
