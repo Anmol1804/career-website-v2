@@ -1,14 +1,25 @@
 # connecting database
-from sqlalchemy import create_engine
-
-db_conn_string = "mysql+pymysql://7wx4q7vlaxmzkf5c0jpb:pscale_pw_2VltpEPEiFnU9A9J0ZLF76hrkwQYeQNlUwtinP27Kxk@aws.connect.psdb.cloud/careers?charset=utf8mb4"
+from sqlalchemy import create_engine, text
 
 
-engine = create_engine(db_conn_string, connect_args={
-        "ssl": {
-            "ssl_ca": "/etc/ssl/cert.pem"
-        }
-    })
+
+
+def load_jobs_from_db():
+  
+  # list to map values
+  keys = ['id','title','location','salary','currency','responsibilities','requirements']
+  
+  with engine.connect() as conn:
+    result = conn.execute(text("select * from jobs"))  
+  
+    jobs = []
+    for row in result.all():
+      row_val_ls = list(row)
+      jobs.append(dict(zip(keys,row_val_ls)))
+  
+    return jobs
+
+print(load_jobs_from_db())
 
 # connection to execute command
 # result -> cursor type
